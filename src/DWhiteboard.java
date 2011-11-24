@@ -8,7 +8,7 @@
  *
  * Created on Nov 23, 2011, 11:13:31 PM
  */
-package testing;
+package DWhiteboard;
 
 /**
  *
@@ -19,6 +19,8 @@ public class DWhiteboard extends javax.swing.JFrame {
     /** Creates new form DWhiteboard */
     public DWhiteboard() {
         initComponents();
+        PaneDrawing.setVisible(false);
+        PaneLogin.setVisible(true);
     }
 
     /** This method is called from within the constructor to
@@ -30,28 +32,71 @@ public class DWhiteboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        DrawingPane = new javax.swing.JPanel();
+        GroupLogin = new javax.swing.ButtonGroup();
+        PaneLogin = new javax.swing.JPanel();
+        ButtonLogin = new javax.swing.JButton();
+        RButtonSOAP = new javax.swing.JRadioButton();
+        RButtonSocket = new javax.swing.JRadioButton();
+        TextHost = new javax.swing.JTextField();
+        LabelHost = new javax.swing.JLabel();
+        PaneDrawing = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         UserItemList = new javax.swing.JList();
         ButtonPen = new javax.swing.JButton();
         ButtonClear = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        ButtonLogout = new javax.swing.JButton();
+        PaneDrawArea = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        DrawingPane.setBackground(new java.awt.Color(255, 255, 255));
+        ButtonLogin.setText("Login");
+        ButtonLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonLoginActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout DrawingPaneLayout = new javax.swing.GroupLayout(DrawingPane);
-        DrawingPane.setLayout(DrawingPaneLayout);
-        DrawingPaneLayout.setHorizontalGroup(
-            DrawingPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 468, Short.MAX_VALUE)
+        GroupLogin.add(RButtonSOAP);
+        RButtonSOAP.setText("SOAP");
+
+        GroupLogin.add(RButtonSocket);
+        RButtonSocket.setSelected(true);
+        RButtonSocket.setText("SOCKET");
+
+        LabelHost.setText("Host:");
+
+        javax.swing.GroupLayout PaneLoginLayout = new javax.swing.GroupLayout(PaneLogin);
+        PaneLogin.setLayout(PaneLoginLayout);
+        PaneLoginLayout.setHorizontalGroup(
+            PaneLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneLoginLayout.createSequentialGroup()
+                .addGap(203, 203, 203)
+                .addComponent(LabelHost)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PaneLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(ButtonLogin)
+                    .addComponent(TextHost, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(RButtonSocket)
+                    .addComponent(RButtonSOAP))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
-        DrawingPaneLayout.setVerticalGroup(
-            DrawingPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 381, Short.MAX_VALUE)
+        PaneLoginLayout.setVerticalGroup(
+            PaneLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneLoginLayout.createSequentialGroup()
+                .addContainerGap(176, Short.MAX_VALUE)
+                .addGroup(PaneLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TextHost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LabelHost))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RButtonSOAP)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RButtonSocket)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ButtonLogin)
+                .addGap(77, 77, 77))
         );
 
         UserItemList.setModel(new javax.swing.AbstractListModel() {
@@ -70,34 +115,51 @@ public class DWhiteboard extends javax.swing.JFrame {
 
         jButton4.setText("jButton4");
 
-        jButton5.setText("jButton5");
+        ButtonLogout.setText("Logout");
+        ButtonLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonLogoutActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(DrawingPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+        PaneDrawArea.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout PaneDrawAreaLayout = new javax.swing.GroupLayout(PaneDrawArea);
+        PaneDrawArea.setLayout(PaneDrawAreaLayout);
+        PaneDrawAreaLayout.setHorizontalGroup(
+            PaneDrawAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 421, Short.MAX_VALUE)
+        );
+        PaneDrawAreaLayout.setVerticalGroup(
+            PaneDrawAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 353, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout PaneDrawingLayout = new javax.swing.GroupLayout(PaneDrawing);
+        PaneDrawing.setLayout(PaneDrawingLayout);
+        PaneDrawingLayout.setHorizontalGroup(
+            PaneDrawingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneDrawingLayout.createSequentialGroup()
+                .addComponent(PaneDrawArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PaneDrawingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneDrawingLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneDrawingLayout.createSequentialGroup()
+                        .addGroup(PaneDrawingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(ButtonClear)
                             .addComponent(ButtonPen)
                             .addComponent(jButton3)
                             .addComponent(jButton4)
-                            .addComponent(jButton5))
-                        .addGap(31, 31, 31))))
+                            .addComponent(ButtonLogout))
+                        .addGap(41, 41, 41))))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(DrawingPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
+        PaneDrawingLayout.setVerticalGroup(
+            PaneDrawingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneDrawingLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ButtonPen)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ButtonClear)
@@ -106,12 +168,40 @@ public class DWhiteboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addComponent(ButtonLogout)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(PaneDrawArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PaneDrawing, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(PaneLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(PaneDrawing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(PaneLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+private void ButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLoginActionPerformed
+    PaneLogin.setVisible(false);
+    PaneDrawing.setVisible(true);
+}//GEN-LAST:event_ButtonLoginActionPerformed
+
+private void ButtonLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonLogoutActionPerformed
+    PaneDrawing.setVisible(false);
+    PaneLogin.setVisible(true);
+}//GEN-LAST:event_ButtonLogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,12 +240,20 @@ public class DWhiteboard extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ButtonClear;
+    private javax.swing.JButton ButtonLogin;
+    private javax.swing.JButton ButtonLogout;
     private javax.swing.JButton ButtonPen;
-    private javax.swing.JPanel DrawingPane;
+    private javax.swing.ButtonGroup GroupLogin;
+    private javax.swing.JLabel LabelHost;
+    private javax.swing.JPanel PaneDrawArea;
+    private javax.swing.JPanel PaneDrawing;
+    private javax.swing.JPanel PaneLogin;
+    private javax.swing.JRadioButton RButtonSOAP;
+    private javax.swing.JRadioButton RButtonSocket;
+    private javax.swing.JTextField TextHost;
     private javax.swing.JList UserItemList;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
