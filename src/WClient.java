@@ -48,6 +48,14 @@ public class WClient extends JFrame {
 		PaneLogin.setVisible(true);
 	}
 	
+	private void populateUserList() {
+		UserItemList.setModel(new AbstractListModel<User>() {
+			public int getSize() { return Users.size(); }
+			public User getElementAt(int i) { return Users.get(i); }
+		});
+	}
+		
+	
 	private void title(String title)  {  
 	      this.setTitle(title);  
 	} 
@@ -87,9 +95,11 @@ public class WClient extends JFrame {
 				}
 				//notify server
 				//Server should add user to user list
-				
+				User a = new User(1,"ABC");
+				Users.add(a);
 				//if success logged on{
 				//get user list from server
+				populateUserList();
 				//select Self from user list
 				
 				//enable drawing for self
@@ -146,14 +156,10 @@ public class WClient extends JFrame {
 								.addGap(77, 77, 77))
 				);
 
-		UserItemList.setModel(new AbstractListModel<User>() {
-			public int getSize() { return Users.size(); }
-			public User getElementAt(int i) { return Users.get(i); }
-		});
+
 		jScrollPane1.setViewportView(UserItemList);
 
 		ButtonPen.setText("Pen");
-		ButtonPen.setToolTipText("");
 
 		ButtonClear.setText("Clear"); //FIXME Doesn't clear on action for somereason
 		ButtonClear.addActionListener(new java.awt.event.ActionListener() {
