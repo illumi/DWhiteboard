@@ -1,10 +1,12 @@
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import javax.swing.*;
@@ -28,6 +30,9 @@ public class WClient extends JFrame {
 	private JButton jButton4;
 	private JScrollPane jScrollPane1;
 	private ArrayList<User> Users = new ArrayList<User>();
+	private boolean drawingEnabled = false;
+	private Graphics2D g;
+	private BufferedImage buff;
 
 	public static void main(String args[]) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
@@ -72,21 +77,23 @@ public class WClient extends JFrame {
 		ButtonLogin.setText("Login");
 		ButtonLogin.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				
+				PaneDrawArea = new DrawingCanvas();
 				TextHost.getText(); //which host
-				/*for (Enumeration<AbstractButton> e = null; e.equals(GroupLogin.getElements()); e.hasMoreElements()) {
+				for (Enumeration<AbstractButton> e = GroupLogin.getElements(); e.hasMoreElements();) {
 					JRadioButton b = (JRadioButton)e.nextElement();
 					if (b.getModel() == GroupLogin.getSelection()) {
 			            //b; //which method
 			        }
-				}*/
+				}
 				//notify server
 				//Server should add user to user list
 				
 				//if success logged on{
 				//get user list from server
 				//select Self from user list
+				
 				//enable drawing for self
+				drawingEnabled = true;
 				PaneLogin.setVisible(false);
 				PaneDrawing.setVisible(true);
 				setTitle("Whiteboard");
@@ -148,7 +155,12 @@ public class WClient extends JFrame {
 		ButtonPen.setText("Pen");
 		ButtonPen.setToolTipText("");
 
-		ButtonClear.setText("Clear");
+		ButtonClear.setText("Clear"); //FIXME Doesn't clear on action for somereason
+		ButtonClear.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				PaneDrawArea = new DrawingCanvas();
+			}
+		});
 
 		jButton3.setText("jButton3");
 
@@ -165,8 +177,6 @@ public class WClient extends JFrame {
 				PaneLogin.setVisible(true);
 			}
 		});
-
-		PaneDrawArea.setBackground(new java.awt.Color(255, 255, 255));
 
 		GroupLayout PaneDrawAreaLayout = new GroupLayout(PaneDrawArea);
 		PaneDrawArea.setLayout(PaneDrawAreaLayout);
@@ -236,44 +246,68 @@ public class WClient extends JFrame {
 		BasicStroke wideStroke = new BasicStroke(8.0f);
 
 		public DrawingCanvas() {
+			buff = new BufferedImage(500, 400, BufferedImage.TYPE_INT_ARGB);
+			g = buff.createGraphics();
+			g.setStroke(wideStroke);
+			init();
+			
 			addMouseListener(new MyMouseListener());
 			addMouseMotionListener(new MyMouseMotionListener());
 		}
-		public void paint(Graphics g) {
-			Graphics2D g2D = (Graphics2D) g;
-			g2D.setStroke(wideStroke);
-			g2D.draw(new Line2D.Double(x1, y1, x2, y2));
+		public void paintComponent(Graphics g) {
+			super.paintComponents(g);
+			g.drawImage(buff, 0, 0, this);
 		}
-
+		
+		public void clear() {
+			g.setPaintMode();
+			g.setColor(Color.white);
+			g.fillRect(0, 0, buff.getWidth(), buff.getHeight());
+			repaint();
+		}
+		public void init() {
+			clear();
+			g.setColor(Color.black);
+		}
+		
 		class MyMouseListener extends MouseAdapter {
 			public void mousePressed(MouseEvent e) {
-				x1 = e.getX();
-				y1 = e.getY();
-				x2 = e.getX();
-				y2 = e.getY();
-				PaneDrawArea.repaint();
+				if (drawingEnabled) {
+					x1 = e.getX();
+					y1 = e.getY();
+					x2 = e.getX();
+					y2 = e.getY();
+					g.draw(new Line2D.Double(x1, y1, x2, y2));
+					repaint();
+				}
 			}
 			/*public void mouseReleased(MouseEvent e) {
-				PaneDrawArea.repaint();
+				repaint();
 			}*/
 			public void mouseClicked(MouseEvent e) {
-				x1 = e.getX();
-				y1 = e.getY();
-				x2 = e.getX();
-				y2 = e.getY();
-				PaneDrawArea.repaint();
+				if (drawingEnabled) {
+					x1 = e.getX();
+					y1 = e.getY();
+					x2 = e.getX();
+					y2 = e.getY();
+					g.draw(new Line2D.Double(x1, y1, x2, y2));
+					repaint();
+				}
 			}
 		}
 		class MyMouseMotionListener extends MouseMotionAdapter {
 			public void mouseDragged(MouseEvent e) {
-				x1 = e.getX();
-				y1 = e.getY();
-				x2 = e.getX();
-				y2 = e.getY();
-				PaneDrawArea.repaint();
+				if (drawingEnabled) {
+					x1 = e.getX();
+					y1 = e.getY();
+					x2 = e.getX();
+					y2 = e.getY();
+					g.draw(new Line2D.Double(x1, y1, x2, y2));
+					repaint();
+				}
 			}
 			/*public void mouseMoved(MouseEvent e) {
-				PaneDrawArea.repaint();
+				repaint();
 			}*/
 		}
 	}
