@@ -1,5 +1,6 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
@@ -25,7 +26,7 @@ public class WClient extends JFrame {
 	private JRadioButton RButtonSocket;
 	private JRadioButton RButtonX;
 	private JTextField TextHost;
-	private JList<User> UserItemList;
+	private JList UserItemList;
 	private JButton jButton3;
 	private JButton jButton4;
 	private JScrollPane jScrollPane1;
@@ -47,18 +48,16 @@ public class WClient extends JFrame {
 		PaneDrawing.setVisible(false);
 		PaneLogin.setVisible(true);
 	}
-	
+
 	private void populateUserList() {
-		UserItemList.setModel(new AbstractListModel<User>() {
+		/*UserItemList.setModel(new AbstractListModel<User>() {
 			public int getSize() { return Users.size(); }
 			public User getElementAt(int i) { return Users.get(i); }
-		});
-	}
+		});*/
 		
-	
-	private void title(String title)  {  
-	      this.setTitle(title);  
-	} 
+		UserItemList = new JList(Users.toArray());
+		UserItemList.setCellRenderer(new UserCellRenderer());
+	}
 
 	private void initComponents() {
 		GroupLogin = new ButtonGroup();
@@ -71,7 +70,7 @@ public class WClient extends JFrame {
 		LabelHost = new JLabel();
 		PaneDrawing = new JPanel();
 		jScrollPane1 = new JScrollPane();
-		UserItemList = new JList<User>();
+		UserItemList = new JList();
 		ButtonPen = new JButton();
 		ButtonClear = new JButton();
 		jButton3 = new JButton();
@@ -90,18 +89,19 @@ public class WClient extends JFrame {
 				for (Enumeration<AbstractButton> e = GroupLogin.getElements(); e.hasMoreElements();) {
 					JRadioButton b = (JRadioButton)e.nextElement();
 					if (b.getModel() == GroupLogin.getSelection()) {
-			            //b; //which method
-			        }
+						//b; //which method
+					}
 				}
 				//notify server
 				//Server should add user to user list
-				User a = new User(1,"ABC");
-				Users.add(a);
+
+				Users.clear();
+				Users.add(new User(1,"ABC")); //test user
 				//if success logged on{
 				//get user list from server
 				populateUserList();
 				//select Self from user list
-				
+
 				//enable drawing for self
 				drawingEnabled = true;
 				PaneLogin.setVisible(false);
@@ -175,7 +175,7 @@ public class WClient extends JFrame {
 		ButtonLogout.setText("Logout");
 		ButtonLogout.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				
+
 				//notify server
 				//re-initialise local variables
 				setTitle("Select a Technology");
@@ -246,7 +246,30 @@ public class WClient extends JFrame {
 
 		pack();
 	}
-	
+
+	class UserCellRenderer extends JLabel implements ListCellRenderer {
+		private final Color HIGHLIGHT_COLOR = new Color(0, 0, 128);
+
+		public UserCellRenderer() {
+			setOpaque(true);
+			setIconTextGap(12);
+		}
+
+		public Component getListCellRendererComponent(JList list, Object value,
+				int index, boolean isSelected, boolean cellHasFocus) {
+			User u = (User) value;
+			setText(u.getName());
+			if (isSelected) {
+				setBackground(HIGHLIGHT_COLOR);
+				setForeground(Color.white);
+			} else {
+				setBackground(Color.white);
+				setForeground(Color.black);
+			}
+			return this;
+		}
+	}
+
 	class DrawingCanvas extends JPanel {
 		int x1, y1, x2, y2;
 		BasicStroke wideStroke = new BasicStroke(8.0f);
@@ -256,7 +279,7 @@ public class WClient extends JFrame {
 			g = buff.createGraphics();
 			g.setStroke(wideStroke);
 			init();
-			
+
 			addMouseListener(new MyMouseListener());
 			addMouseMotionListener(new MyMouseMotionListener());
 		}
@@ -264,7 +287,7 @@ public class WClient extends JFrame {
 			super.paintComponents(g);
 			g.drawImage(buff, 0, 0, this);
 		}
-		
+
 		public void clear() {
 			g.setPaintMode();
 			g.setColor(Color.white);
@@ -275,7 +298,7 @@ public class WClient extends JFrame {
 			clear();
 			g.setColor(Color.black);
 		}
-		
+
 		class MyMouseListener extends MouseAdapter {
 			public void mousePressed(MouseEvent e) {
 				if (drawingEnabled) {
