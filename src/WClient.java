@@ -50,11 +50,6 @@ public class WClient extends JFrame {
 	}
 
 	private void populateUserList() {
-		/*UserItemList.setModel(new AbstractListModel<User>() {
-			public int getSize() { return Users.size(); }
-			public User getElementAt(int i) { return Users.get(i); }
-		});*/
-		
 		UserItemList = new JList(Users.toArray());
 		UserItemList.setCellRenderer(new UserCellRenderer());
 	}
@@ -83,12 +78,14 @@ public class WClient extends JFrame {
 		ButtonLogin.setText("Login");
 		ButtonLogin.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				PaneDrawArea = new DrawingCanvas();
+				PaneDrawArea.clear();
+				
 				TextHost.getText(); //which host
+				
 				for (Enumeration<AbstractButton> e = GroupLogin.getElements(); e.hasMoreElements();) {
 					JRadioButton b = (JRadioButton)e.nextElement();
 					if (b.getModel() == GroupLogin.getSelection()) {
-						//b; //which method
+						//b; //which radio button
 					}
 				}
 				//notify server
