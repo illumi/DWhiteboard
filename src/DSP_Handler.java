@@ -1,3 +1,5 @@
+package coursework_2;
+
 import java.io.*;
 import java.net.*;
 
@@ -38,11 +40,14 @@ public class DSP_Handler extends Thread {
 		}
 		finally {
 			try {
+				
+				System.out.println("in finally");
 				server.removeUser(this);
 
 				output.close();
 				input.close();
 				client.close();
+				
 			}
 			catch (IOException e) {
 				System.err.println(e.getMessage());
@@ -75,6 +80,12 @@ public class DSP_Handler extends Thread {
 
 	public void sendMessage(String message) {
 		output.println(message);
+	}
+	
+	public void exit() throws Exception {
+		input.close();
+		output.close();
+//		System.exit(0);
 	}
 
 }

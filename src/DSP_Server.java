@@ -1,3 +1,5 @@
+package coursework_2;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -133,20 +135,27 @@ public class DSP_Server implements Runnable {
 		return wu;
 	}
 
-	public synchronized void removeUser(DSP_Handler user) {
+	public synchronized void removeUser(DSP_Handler user){
 		// must ignore requests to remove non-registered users
+		try{
+			Integer id = getPlayerID(user);
 
-		Integer id = getPlayerID(user);
+			if (id == null) return;
 
-		if (id == null) return;
+			WrappedUser wu = users.remove(id);
 
-		WrappedUser wu = users.remove(id);
+			if (wu == null) return;
 
-		if (wu == null) return;
+			System.out.println("Calling user.exit");
+			user.exit();
 
-		broadcast("Player left: " + wu.name);
+			broadcast("Player left: " + wu.name);
 
-		System.out.println("User left: " + wu.name);
+			System.out.println("User left: " + wu.name);}
+
+		catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
 	}
 
 	public static void main(String[] args){
