@@ -1,5 +1,3 @@
-package coursework_2;
-
 public class DSP_User {
 	Integer id;
 	String name;
