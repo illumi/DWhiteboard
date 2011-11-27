@@ -18,13 +18,13 @@ public class DSP_Handler extends Thread {
 	public void run() {
 		try {
 
-			output.println("In DSP_Handler.run()");
+//			output.println("In DSP_Handler.run()");
 
 			String message = input.readLine(); 
 
 			DSP_User u = server.addUser(this, message);
 
-			server.sendChat(this, "user id: " + u.id + " user name: " + u.name);
+//			server.sendChat(this, "user id: " + u.id + " user name: " + u.name);
 
 			// Begin handling loop
 
@@ -38,8 +38,6 @@ public class DSP_Handler extends Thread {
 		}
 		finally {
 			try {
-				
-				System.out.println("in finally");
 				server.removeUser(this);
 
 				output.close();
@@ -62,16 +60,18 @@ public class DSP_Handler extends Thread {
 			return line;
 		}
 		catch (IOException e){
-			System.err.println("IO Error"); 
+//			System.err.println("IO Error"); 
 			return null;
 		}
 	}
 
 	private void handleMessage(String message) throws Exception {
-		if(message.startsWith("chat:"))
+		if(message.startsWith("chat"))
 			server.sendChat(this, message);
-		else if(message.startsWith("exit:"))
+		else if(message.startsWith("exit"))
 			server.removeUser(this);
+		else if (message.startsWith("draw"))
+			server.broadcastExcept("draw: " + message, this);
 		else
 			server.sendChat(this, "Unknow message: " + message);
 	}

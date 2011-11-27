@@ -46,8 +46,6 @@ public class DSP_Server implements Runnable {
 			private ServerState state = ServerState.Waiting;
 
 			public void run() {
-				System.out.println("in run");
-
 				switch (state) {
 				case Waiting:
 					if (users.size() >= minPlayers) {
@@ -86,13 +84,11 @@ public class DSP_Server implements Runnable {
 	}
 
 	private synchronized void startRound() {
-		System.out.println("Starting round");
-		broadcast("Starting round");
+		broadcast("Starting round.");
 	}
 
 	private synchronized void abortRound(String reason) {
-		System.out.println("Aborting round");
-		broadcast("Aborting round");
+		broadcast("Aborting round.");
 	}
 
 	public synchronized void sendChat(DSP_Handler user, String message) {
@@ -104,7 +100,6 @@ public class DSP_Server implements Runnable {
 	}
 
 	private Integer getPlayerID(DSP_Handler user) {
-		System.out.print("In DSP_Server.getPlayerID\n");
 		for (Map.Entry<Integer, WrappedUser> entry: users.entrySet()) {
 			if (user == entry.getValue().handler) {
 				return entry.getKey();
@@ -113,28 +108,29 @@ public class DSP_Server implements Runnable {
 		return null;
 	}
 
-	private void broadcast(String message) {
+	public void broadcast(String message) {
 		for (WrappedUser wu : users.values()) {
 			wu.handler.sendMessage(message);
+			System.out.println("Broadcast is: " + message);
 		}
 	}
 	
-	private void broadcastExcept(String message, DSP_Handler myself){
+	public void broadcastExcept(String message, DSP_Handler myself){
 		for (WrappedUser wu : users.values()) {
 			if(wu.handler != myself)
 				wu.handler.sendMessage(message);
+			else
+				System.out.println(wu.getName() + " said: " + message);
 		}
 	}
 
 	public synchronized DSP_User addUser(DSP_Handler user, String request) {
-		System.out.println("In DST_Server.addUser request is: " + request);
+		System.out.println("DST_Server.addUser");
 		Integer id = getNextID();
-		System.out.println("In DST_Server.addUser id is: " + id);
+		System.out.println("id is: " + id);
 		WrappedUser wu = new WrappedUser(id, user, request);
-		System.out.println("In DST_Server.addUser wu.name is: " + wu.name);
+		System.out.println("wu.name is: " + wu.name);
 		users.put(id, wu);
-		System.out.println("In DST_Server.addUser USERS.PUT");	
-		System.out.println("User joined: " + request);
 		broadcast("User joined: " + request);
 
 		return wu;
@@ -151,12 +147,10 @@ public class DSP_Server implements Runnable {
 
 			if (wu == null) return;
 
-			System.out.println("Calling user.exit");
 			user.exit();
 
 			broadcast("Player left: " + wu.name);
-
-			System.out.println("User left: " + wu.name);}
+		}
 
 		catch (Exception e) {
 			System.err.println(e.getMessage());
