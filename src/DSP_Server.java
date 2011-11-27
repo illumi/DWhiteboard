@@ -9,7 +9,7 @@ public class DSP_Server implements Runnable {
 	private int defaultPort = 11111;
 	private int minPlayers = 2;
 
-	private class WrappedUser extends DSP_User {
+	private class WrappedUser extends User {
 		public DSP_Handler handler;
 
 		public WrappedUser(int id, DSP_Handler handler, String name) {
@@ -124,7 +124,7 @@ public class DSP_Server implements Runnable {
 		}
 	}
 
-	public synchronized DSP_User addUser(DSP_Handler user, String request) {
+	public synchronized User addUser(DSP_Handler user, String request) {
 		System.out.println("DST_Server.addUser");
 		Integer id = getNextID();
 		System.out.println("id is: " + id);

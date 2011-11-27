@@ -22,7 +22,7 @@ public class DSP_Handler extends Thread {
 
 			String message = input.readLine(); 
 
-			DSP_User u = server.addUser(this, message);
+			User u = server.addUser(this, message);
 
 //			server.sendChat(this, "user id: " + u.id + " user name: " + u.name);
 
