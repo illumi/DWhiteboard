@@ -100,7 +100,7 @@ public class DSP_Server implements Runnable {
 
 		//		NEEDS TO BE CHANGED, YOU DON'T WANT TO SEND CHAT MESSAGE TO YOURSELF
 
-		broadcast(message);
+		broadcastExcept(message, user);
 	}
 
 	private Integer getPlayerID(DSP_Handler user) {
@@ -116,6 +116,13 @@ public class DSP_Server implements Runnable {
 	private void broadcast(String message) {
 		for (WrappedUser wu : users.values()) {
 			wu.handler.sendMessage(message);
+		}
+	}
+	
+	private void broadcastExcept(String message, DSP_Handler myself){
+		for (WrappedUser wu : users.values()) {
+			if(wu.handler != myself)
+				wu.handler.sendMessage(message);
 		}
 	}
 
