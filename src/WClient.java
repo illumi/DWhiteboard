@@ -19,7 +19,7 @@ public class WClient extends JFrame {
 	private JButton ButtonPen;
 	private ButtonGroup GroupLogin;
 	private JLabel LabelHost;
-	private JPanel PaneDrawArea;
+	private DrawingCanvas PaneDrawArea;
 	private JPanel PaneDrawing;
 	private JPanel PaneLogin;
 	private JRadioButton RButtonSOAP;
@@ -70,7 +70,6 @@ public class WClient extends JFrame {
 		LabelHost = new JLabel();
 		PaneDrawing = new JPanel();
 		jScrollPane1 = new JScrollPane();
-		UserItemList = new JList();
 		ButtonPen = new JButton();
 		ButtonClear = new JButton();
 		jButton3 = new JButton();
@@ -100,6 +99,7 @@ public class WClient extends JFrame {
 				//if success logged on{
 				//get user list from server
 				populateUserList();
+				jScrollPane1.setViewportView(UserItemList);
 				//select Self from user list
 
 				//enable drawing for self
@@ -155,16 +155,13 @@ public class WClient extends JFrame {
 								.addComponent(ButtonLogin)
 								.addGap(77, 77, 77))
 				);
-
-
-		jScrollPane1.setViewportView(UserItemList);
-
+		
 		ButtonPen.setText("Pen");
 
 		ButtonClear.setText("Clear"); //FIXME Doesn't clear on action for somereason
 		ButtonClear.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				PaneDrawArea = new DrawingCanvas();
+				PaneDrawArea.clear();
 			}
 		});
 
@@ -278,7 +275,7 @@ public class WClient extends JFrame {
 			buff = new BufferedImage(500, 400, BufferedImage.TYPE_INT_ARGB);
 			g = buff.createGraphics();
 			g.setStroke(wideStroke);
-			init();
+			clear();
 
 			addMouseListener(new MyMouseListener());
 			addMouseMotionListener(new MyMouseMotionListener());
@@ -292,11 +289,8 @@ public class WClient extends JFrame {
 			g.setPaintMode();
 			g.setColor(Color.white);
 			g.fillRect(0, 0, buff.getWidth(), buff.getHeight());
+			g.setColor(Color.black); //set pen back to black
 			repaint();
-		}
-		public void init() {
-			clear();
-			g.setColor(Color.black);
 		}
 
 		class MyMouseListener extends MouseAdapter {
