@@ -22,7 +22,7 @@ public class WClient extends JFrame {
 	private JRadioButton RButtonX;
 	private JTextField TextHost;
 	private JTextField TextName;
-	private JList<User> UserItemList;
+	private JList UserItemList;
 	private JButton jButton3;
 	private JButton jButton4;
 	private JScrollPane jScrollPane1;
@@ -31,7 +31,11 @@ public class WClient extends JFrame {
 
 	public static void main(String args[]) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {new WClient().setVisible(true);}
+			public void run() {
+				new WClient().setVisible(true);
+				
+				
+			}
 		});
 	}
 
