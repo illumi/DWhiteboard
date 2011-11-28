@@ -15,10 +15,10 @@ import javax.swing.JPanel;
 		boolean drawingEnabled = false;
 		private Graphics2D g;
 		private BufferedImage buff;
-		WClient c;
+		WWindow w;
 
-		public DrawingCanvas(WClient c) {
-			this.c = c;
+		public DrawingCanvas(WWindow w) {
+			this.w = w;
 			
 			buff = new BufferedImage(500, 400, BufferedImage.TYPE_INT_ARGB);
 			g = buff.createGraphics();
@@ -47,7 +47,7 @@ import javax.swing.JPanel;
 					x = e.getX();
 					y = e.getY();
 					g.draw(new Line2D.Double(x, y, x, y));
-					c.c.sendMessage("draw "+x+" " +y);
+					w.client.c.sendMessage("draw "+x+" " +y);
 					repaint();
 				}
 			}
@@ -58,7 +58,7 @@ import javax.swing.JPanel;
 					x = e.getX();
 					y = e.getY();
 					g.draw(new Line2D.Double(x, y, x, y));
-					c.c.sendMessage("draw "+x+" " +y);
+					w.client.c.sendMessage("draw "+x+" " +y);
 					repaint();
 				}
 			}

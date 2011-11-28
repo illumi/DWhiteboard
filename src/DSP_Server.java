@@ -158,10 +158,8 @@ public class DSP_Server implements Runnable {
 	}
 
 	public static void main(String[] args){
-
 		System.out.println("Starting server.");
-		DSP_Server server = new DSP_Server();
-		new Thread(server).start();
+		new Thread(new DSP_Server()).start();
 	}
 }
 
