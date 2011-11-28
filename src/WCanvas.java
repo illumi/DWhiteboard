@@ -9,7 +9,7 @@ import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
-class DrawingCanvas extends JPanel {
+class WCanvas extends JPanel {
 	private int x, y;
 	private BasicStroke wideStroke = new BasicStroke(8.0f);
 	private boolean drawingEnabled = false;
@@ -17,7 +17,7 @@ class DrawingCanvas extends JPanel {
 	private BufferedImage buff;
 	private WWindow w;
 
-	public DrawingCanvas(WWindow w) {
+	public WCanvas(WWindow w) {
 		this.w = w;
 
 		buff = new BufferedImage(500, 400, BufferedImage.TYPE_INT_ARGB);

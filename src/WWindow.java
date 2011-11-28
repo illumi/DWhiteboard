@@ -25,7 +25,7 @@ public class WWindow extends JFrame{
 	private ButtonGroup GroupLogin;
 	private JLabel LabelHost;
 	private JLabel LabelName;
-	private DrawingCanvas PaneDrawArea;
+	private WCanvas PaneDrawArea;
 	private JPanel PaneDrawing;
 	private JPanel PaneLogin;
 	private JRadioButton RButtonSOAP;
@@ -71,7 +71,7 @@ public class WWindow extends JFrame{
 		jButton3 = new JButton();
 		jButton4 = new JButton();
 		ButtonLogout = new JButton();
-		PaneDrawArea = new DrawingCanvas(this);
+		PaneDrawArea = new WCanvas(this);
 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);
