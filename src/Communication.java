@@ -44,6 +44,7 @@ public class Communication {
 	private boolean rmiConnect(String host) {return true;} //TODO implement rmi connection
 
 	protected synchronized void sendMessage(String message) {
+		//System.out.println(message);
 		if (connected) {
 			output.println(message);
 		}

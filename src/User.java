@@ -1,6 +1,6 @@
 public class User {
-	Integer id;
-	String name;
+	private Integer id;
+	private String name;
 
 	public User(Integer id, String name) {
 		this.id = id;
@@ -13,5 +13,8 @@ public class User {
 
 	public String getName() {
 		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 }
