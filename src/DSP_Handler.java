@@ -18,13 +18,13 @@ public class DSP_Handler extends Thread {
 	public void run() {
 		try {
 
-//			output.println("In DSP_Handler.run()");
+			//output.println("In DSP_Handler.run()");
 
 			String message = input.readLine(); 
 
 			User u = server.addUser(this, message);
 
-//			server.sendChat(this, "user id: " + u.id + " user name: " + u.name);
+			//server.sendChat(this, "user id: " + u.id + " user name: " + u.name);
 
 			// Begin handling loop
 
@@ -43,7 +43,7 @@ public class DSP_Handler extends Thread {
 				output.close();
 				input.close();
 				client.close();
-				
+
 			}
 			catch (IOException e) {
 				System.err.println(e.getMessage());
@@ -60,7 +60,7 @@ public class DSP_Handler extends Thread {
 			return line;
 		}
 		catch (IOException e){
-//			System.err.println("IO Error"); 
+			//System.err.println("IO Error"); 
 			return null;
 		}
 	}
@@ -79,11 +79,11 @@ public class DSP_Handler extends Thread {
 	public void sendMessage(String message) {
 		output.println(message);
 	}
-	
+
 	public void exit() throws Exception {
 		input.close();
 		output.close();
-//		System.exit(0);
+		//System.exit(0);
 	}
 
 }

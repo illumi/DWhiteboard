@@ -38,21 +38,21 @@ public class WWindow extends JFrame{
 	private JButton jButton4;
 	private JScrollPane jScrollPane1;
 	protected Whiteboard w;
-	
+
 	public void sendMessage(String m) {
 		w.sendMessage(m);
 	}
-	
+
 	public WWindow (Whiteboard w) {
 		setTitle("Log in");
-		
+
 		this.w = w;
 		initComponents();
 		PaneDrawing.setVisible(false);
 		PaneLogin.setVisible(true);
 		this.setVisible(true);
 	}
-	
+
 	private void initComponents() {
 		GroupLogin = new ButtonGroup();
 		PaneLogin = new JPanel();
@@ -80,8 +80,8 @@ public class WWindow extends JFrame{
 		ButtonLogin.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				PaneDrawArea.clear();
-				
-				
+
+
 				String where = TextHost.getText();
 				String how = null;
 				String nick = TextName.getText();
@@ -91,12 +91,12 @@ public class WWindow extends JFrame{
 						how = b.getText(); //which radio button
 					}
 				}
-				
+
 				w.login(how, where, nick);
-				
+
 				//notify server
 				//c = new Communication(, how);
-				
+
 				//c.sendMessage(TextName.getText());
 				//Server should add user to user list
 
@@ -154,20 +154,20 @@ public class WWindow extends JFrame{
 								.addComponent(TextHost, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(LabelHost))
 								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-						.addGroup(PaneLoginLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-								.addComponent(TextName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(LabelHost)
-								)
-								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(RButtonSOAP)
-								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(RButtonSocket)
-								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(RButtonX)
-								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(ButtonLogin))
+								.addGroup(PaneLoginLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+										.addComponent(TextName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(LabelHost)
+										)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(RButtonSOAP)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(RButtonSocket)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(RButtonX)
+										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(ButtonLogin))
 				);
-		
+
 		ButtonPen.setText("Pen");
 
 		ButtonClear.setText("Clear");

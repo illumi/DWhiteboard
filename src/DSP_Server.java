@@ -114,7 +114,7 @@ public class DSP_Server implements Runnable {
 			System.out.println("Broadcast is: " + message);
 		}
 	}
-	
+
 	public void broadcastExcept(String message, DSP_Handler myself){
 		for (WrappedUser wu : users.values()) {
 			if(wu.handler != myself)

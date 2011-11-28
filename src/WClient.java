@@ -5,22 +5,22 @@ public class WClient implements Runnable {
 	private Communication c;
 	private Whiteboard w;
 	private String nick = "User";
-	
+
 	public WClient(Whiteboard w, String how, String where, String name) {
 		this.w = w;
 		this.nick = name;
 		c = new Communication(where, how);
 	}
-	
+
 	public void sendMessage(String m) {
 		c.sendMessage(m);
 	}
-	
+
 	public void run() {
 		try {
 			while (true) {
 				String m = c.readMessage();
-				//handleMessage(m);
+				//decodeMessage(m); //TODO implement message system
 			}
 		}
 		catch (Exception e) {
