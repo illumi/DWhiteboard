@@ -29,7 +29,7 @@ public class DSP_Handler extends Thread {
 			// Begin handling loop
 
 			while ((message = readMessage()) != null) {
-				handleMessage(message);
+				decodeMessage(message);
 			}	
 
 		}
@@ -65,7 +65,7 @@ public class DSP_Handler extends Thread {
 		}
 	}
 
-	private void handleMessage(String message) throws Exception {
+	private void decodeMessage(String message) throws Exception {
 		if(message.startsWith("chat"))
 			server.sendChat(this, message);
 		else if(message.startsWith("exit"))
@@ -83,7 +83,6 @@ public class DSP_Handler extends Thread {
 	public void exit() throws Exception {
 		input.close();
 		output.close();
-		//System.exit(0);
 	}
 
 }

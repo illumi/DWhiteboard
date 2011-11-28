@@ -5,9 +5,8 @@ import java.util.*;
 public class DSP_Server implements Runnable {
 
 	private TreeMap<Integer, WrappedUser> users = new TreeMap<Integer, WrappedUser>();;
-	private static int id = 0;
+	private int id = 0;
 	private int defaultPort = 11111;
-	private int minPlayers = 2;
 
 	private class WrappedUser extends User {
 		public DSP_Handler handler;
@@ -24,11 +23,6 @@ public class DSP_Server implements Runnable {
 		return id++;
 	}
 
-	private enum ServerState {
-		Waiting,
-		Ready;
-	}
-
 	public void run() {
 		ServerSocket sock;
 
@@ -40,32 +34,6 @@ public class DSP_Server implements Runnable {
 			System.err.println("Cannot open port " + defaultPort);
 			return;
 		}
-
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask () {
-			private ServerState state = ServerState.Waiting;
-
-			public void run() {
-				switch (state) {
-				case Waiting:
-					if (users.size() >= minPlayers) {
-						startRound();
-						state = ServerState.Ready;
-					}
-					break;
-				case Ready:
-					long currentTime = System.currentTimeMillis();
-					if (users.size() < minPlayers) {
-						abortRound("To few player, time: " + currentTime);
-						state = ServerState.Waiting;
-					}
-
-					break;
-				default:
-					System.err.println(
-							"game in unknown state");
-				}}}, 1000, 1000);
-
 		while (true) {
 			try {
 				System.out.println("New client arrived.");
@@ -83,19 +51,8 @@ public class DSP_Server implements Runnable {
 		}
 	}
 
-	private synchronized void startRound() {
-		broadcast("Starting round.");
-	}
-
-	private synchronized void abortRound(String reason) {
-		broadcast("Aborting round.");
-	}
-
 	public synchronized void sendChat(DSP_Handler user, String message) {
 		Integer id = getPlayerID(user);
-
-		//		NEEDS TO BE CHANGED, YOU DON'T WANT TO SEND CHAT MESSAGE TO YOURSELF
-
 		broadcastExcept(message, user);
 	}
 
@@ -149,7 +106,7 @@ public class DSP_Server implements Runnable {
 
 			user.exit();
 
-			broadcast("Player left: " + wu.name);
+			broadcast("User left: " + wu.name);
 		}
 
 		catch (Exception e) {
