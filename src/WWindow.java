@@ -109,7 +109,7 @@ public class WWindow extends JFrame{
 				//select Self from user list
 
 				//enable drawing for self
-				PaneDrawArea.drawingEnabled = true;
+				PaneDrawArea.drawingEnabled(true);
 				PaneLogin.setVisible(false);
 				PaneDrawing.setVisible(true);
 				setTitle("Whiteboard");
@@ -170,7 +170,7 @@ public class WWindow extends JFrame{
 		
 		ButtonPen.setText("Pen");
 
-		ButtonClear.setText("Clear"); //FIXME Doesn't clear on action for somereason
+		ButtonClear.setText("Clear");
 		ButtonClear.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				PaneDrawArea.clear();

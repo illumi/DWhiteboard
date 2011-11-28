@@ -12,10 +12,10 @@ import javax.swing.JPanel;
 	class DrawingCanvas extends JPanel {
 		private int x, y;
 		private BasicStroke wideStroke = new BasicStroke(8.0f);
-		boolean drawingEnabled = false;
+		private boolean drawingEnabled = false;
 		private Graphics2D g;
 		private BufferedImage buff;
-		WWindow w;
+		private WWindow w;
 
 		public DrawingCanvas(WWindow w) {
 			this.w = w;
@@ -28,6 +28,11 @@ import javax.swing.JPanel;
 			addMouseListener(new MyMouseListener());
 			addMouseMotionListener(new MyMouseMotionListener());
 		}
+		
+		public void drawingEnabled(boolean b) {
+			this.drawingEnabled = b;
+		}
+		
 		public void paintComponent(Graphics g) {
 			super.paintComponents(g);
 			g.drawImage(buff, 0, 0, this);

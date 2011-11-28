@@ -4,7 +4,7 @@ public class WClient implements Runnable {
 	private ArrayList<User> Users = new ArrayList<User>();
 	private Communication c;
 	private Whiteboard w;
-	String nick = "User";
+	private String nick = "User";
 	
 	public WClient(Whiteboard w, String how, String where, String name) {
 		this.w = w;
