@@ -1,26 +1,25 @@
-import java.awt.Color;
-import java.awt.Component;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import javax.swing.*;
 
 public class WClient implements Runnable {
 	private ArrayList<User> Users = new ArrayList<User>();
-	protected Communication c;
+	private Communication c;
+	private Whiteboard w;
+	String nick = "User";
 	
-	public WClient() {
-		/*PaneDrawing.setVisible(false);
-		PaneLogin.setVisible(true);*/
+	public WClient(Whiteboard w, String how, String where, String name) {
+		this.w = w;
+		this.nick = name;
+		c = new Communication(where, how);
+	}
+	
+	public void sendMessage(String m) {
+		c.sendMessage(m);
 	}
 	
 	public void run() {
 		try {
 			while (true) {
-				//String m = c.readMessage();
+				String m = c.readMessage();
 				//handleMessage(m);
 			}
 		}

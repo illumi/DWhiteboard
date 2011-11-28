@@ -17,7 +17,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.WindowConstants;
 
 
-public class WWindow extends JFrame {
+public class WWindow extends JFrame{
 	private JButton ButtonClear;
 	private JButton ButtonLogin;
 	private JButton ButtonLogout;
@@ -37,13 +37,19 @@ public class WWindow extends JFrame {
 	private JButton jButton3;
 	private JButton jButton4;
 	private JScrollPane jScrollPane1;
-	protected WClient client;
+	protected Whiteboard w;
 	
-	public WWindow (WClient client) {
+	public void sendMessage(String m) {
+		w.sendMessage(m);
+	}
+	
+	public WWindow (Whiteboard w) {
 		setTitle("Log in");
 		
-		this.client = client;
+		this.w = w;
 		initComponents();
+		PaneDrawing.setVisible(false);
+		PaneLogin.setVisible(true);
 		this.setVisible(true);
 	}
 	
@@ -75,15 +81,21 @@ public class WWindow extends JFrame {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				PaneDrawArea.clear();
 				
+				
+				String where = TextHost.getText();
 				String how = null;
+				String nick = TextName.getText();
 				for (Enumeration<AbstractButton> e = GroupLogin.getElements(); e.hasMoreElements();) {
 					JRadioButton b = (JRadioButton)e.nextElement();
 					if (b.getModel() == GroupLogin.getSelection()) {
 						how = b.getText(); //which radio button
 					}
 				}
+				
+				w.login(how, where, nick);
+				
 				//notify server
-				//c = new Communication(TextHost.getText(), how);
+				//c = new Communication(, how);
 				
 				//c.sendMessage(TextName.getText());
 				//Server should add user to user list

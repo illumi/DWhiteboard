@@ -47,7 +47,7 @@ import javax.swing.JPanel;
 					x = e.getX();
 					y = e.getY();
 					g.draw(new Line2D.Double(x, y, x, y));
-					w.client.c.sendMessage("draw "+x+" " +y);
+					w.sendMessage("draw "+x+" " +y);
 					repaint();
 				}
 			}
@@ -58,7 +58,7 @@ import javax.swing.JPanel;
 					x = e.getX();
 					y = e.getY();
 					g.draw(new Line2D.Double(x, y, x, y));
-					w.client.c.sendMessage("draw "+x+" " +y);
+					w.sendMessage("draw "+x+" " +y);
 					repaint();
 				}
 			}
