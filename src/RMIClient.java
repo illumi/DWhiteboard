@@ -7,6 +7,7 @@ public class RMIClient{
 	private String message = "";
 	private boolean firstMessage = true;
 	private static String name;
+	private static String hostname;
 	private BufferedReader input; 
 	private PrintStream output; 
 
@@ -20,8 +21,11 @@ public class RMIClient{
 
 	public void run(){
 		try {
-			//CHANGE LOOKUP SO IT TAKES SERVER NAME FROM INPUT STREAM
-			Remote remoteObject = Naming.lookup("rmichat");
+			System.out.print("hostname: ");
+			hostname = input.readLine();
+			
+			//BUILD HOST ADDRESS HERE
+			Remote remoteObject = Naming.lookup("rmi://" + hostname + "/drawIt");
 
 			if (remoteObject instanceof RMIServerInterface) {
 				server = (RMIServerInterface)remoteObject ;
