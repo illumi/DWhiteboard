@@ -185,6 +185,7 @@ public class WWindow extends JFrame{
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 
 				//TODO notify server
+				sendMessage("logout ");
 				//re-initialise local variables
 				setTitle("Select a Technology");
 				PaneDrawing.setVisible(false);

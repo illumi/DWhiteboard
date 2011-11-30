@@ -27,6 +27,10 @@ public class WClientHandler extends Thread {
 	public String getNick() {
 		return me.getName();
 	}
+	
+	public Integer getClientId() {
+		return me.getId();
+	}
 
 	public void run() {
 		try {

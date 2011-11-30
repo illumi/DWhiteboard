@@ -29,13 +29,13 @@ public class WServe implements Runnable {
 		while (true) {
 			try {
 				Socket client = sock.accept();
-				Integer id = getNextID();
-				WClientHandler handler = new WClientHandler(this, client, new WUser(id,"user"+id));
-				Users.put(id, handler);
+				Integer newId = getNextID();
+				WClientHandler handler = new WClientHandler(this, client, new WUser(newId,"user"+newId));
+				Users.put(newId, handler);
 				new Thread(handler).start();
 			}
 			catch (Exception e) {
-				System.err.println(e.getMessage());
+				System.err.println("Eek! Server error " +e.getMessage());
 			}
 		}
 	}
@@ -46,7 +46,7 @@ public class WServe implements Runnable {
 			System.out.println("Broadcast: " + message);
 		}
 	}
-	
+
 	public void broadcastTo(Integer id, String message) {
 		WClientHandler who = Users.get(id);
 		who.sendMessage(message);
@@ -65,17 +65,15 @@ public class WServe implements Runnable {
 
 	public void setName(WClientHandler client, String name) {
 		client.iAm(name);
-		Users.put(id,client); //putting existing id overwrites previous entry
-		broadcastExcept(id, "User joined: " + name);
+		Users.put(client.getClientId(),client); //putting existing id overwrites previous entry
+		broadcastExcept(client.getClientId(), "User joined: " + name);
 	}
 	
 	public String getUsers(){
 		String allUsers = "users ";
-		
 		for (WClientHandler u: Users.values()) {
-			allUsers = allUsers + "#" + u.getId() + " " + u.getNick();
+			allUsers = allUsers + "#" + u.getClientId() + " " + u.getNick();
 		}
-		
 		return allUsers;
 	}
 
@@ -85,10 +83,8 @@ public class WServe implements Runnable {
 			if (user == null) return;
 			user.exit();
 			broadcast("User left: " + user.getNick());
-		}
-
-		catch (Exception e) {
-			System.err.println(e.getMessage());
+		} catch (Exception e) {
+			System.err.println("Eek! Remove user error: "+ e.getMessage());
 		}
 	}
 

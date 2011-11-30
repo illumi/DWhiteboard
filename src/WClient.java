@@ -14,6 +14,7 @@ public class WClient implements Runnable {
 	}
 
 	public void sendMessage(String m) {
+		System.out.println(m);
 		c.sendMessage(m);
 	}
 
@@ -21,7 +22,8 @@ public class WClient implements Runnable {
 		try {
 			while (true) {
 				String m = c.readMessage();
-				decodeMessage(m); //TODO implement message system
+				System.out.println(m);
+				decodeMessage(m);
 			}
 		}
 		catch (Exception e) {
@@ -33,7 +35,7 @@ public class WClient implements Runnable {
 		System.exit(0);
 	}
 
-	private void decodeMessage(String message) throws Exception {
+	private void decodeMessage(String message) throws Exception {  //TODO implement message system	
 		String[] m = message.split(" ");
 		
 		if(message.startsWith("users"))
@@ -43,15 +45,16 @@ public class WClient implements Runnable {
 		//else
 			
 	}
-	
+
 	private void populateUserList(String[] m) {
 		Users.clear();
-		
+
 		for (String s: m) {
 			String[] user = s.split(" ");
 			Users.put(Integer.parseInt(user[0]), user[1]);
 		}
 
+		//System.out.println(""+Users.keySet());
 		w.populateUserList();
 	}
 }
