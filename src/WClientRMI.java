@@ -1,9 +1,6 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.rmi.Naming;
-import java.rmi.Remote;
+import java.rmi.*;
+import java.rmi.server.*;
+import java.io.*;
 
 public class WClientRMI implements Communication {
 	protected boolean connected = false;
@@ -21,6 +18,14 @@ public class WClientRMI implements Communication {
 			if (remoteObject instanceof RMIServerInterface) {
 				server = (RMIServerInterface)remoteObject ;
 				displayChat = new RMIDisplayHandler(output);
+				
+				//
+				String username = "c1";
+				displayChat.setName(username);
+				server.join(displayChat);
+				
+				
+				//
 				connected = true;
 			}
 			else{
@@ -33,8 +38,14 @@ public class WClientRMI implements Communication {
 	}
 	
 	public void sendMessage(String message) {
-		if(connected) {
-			System.out.println(message);
+		try{
+			if(connected) {
+				server.broadcastAll(displayChat, message);
+			}
+		}
+		catch (RemoteException re){
+			System.out.println("Fail " + re);
+
 		}
 	}
 
@@ -45,17 +56,22 @@ public class WClientRMI implements Communication {
 				return null;
 			return line;
 		}
-		catch (IOException e){
-			System.err.println("IO Error"); 
+		catch (Exception ie) {
+			output.append("Failed to send message.");
 			return null;
 		}
+		
 	}	
 
 	public void close() {
 		try {
-			connected = false;
-			output.close();
+			server.leave(displayChat);
+			
 			input.close();
+			output.close();
+			
+			System.exit(0);
+			
 		} catch (IOException e){
 			System.err.println("Disastrous");
 		}
