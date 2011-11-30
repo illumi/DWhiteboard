@@ -1,11 +1,11 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.TreeMap;
+import java.util.HashMap;
 
 public class WServe implements Runnable {
 
-	private TreeMap<Integer, WClientHandler> Users = new TreeMap<Integer, WClientHandler>();;
+	private HashMap<Integer, WClientHandler> Users = new HashMap<Integer, WClientHandler>();;
 	private int id = 0;
 	private int defaultPort = 11111;
 

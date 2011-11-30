@@ -49,7 +49,7 @@ public class WClient implements Runnable {
 		
 		for (String s: m) {
 			String[] user = s.split(" ");
-			Users.put(user[0], user[1]);
+			Users.put(Integer.parseInt(user[0]), user[1]);
 		}
 
 		w.populateUserList();
