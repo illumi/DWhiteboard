@@ -13,9 +13,9 @@ public class WClient implements Runnable {
 		this.name = name;
 		
 		if(how.equals("SOCKET")) {
-			c = new WClientSocket(where, how);
+			c = new WClientSocket(where);
 		}else if(how.equals("RMI")) {
-			c = new WClientRMI(where, how);
+			c = new WClientRMI(where);
 		} else if(how.equals("X")) {
 			//c = new Communication(where, how);
 		}
@@ -25,7 +25,6 @@ public class WClient implements Runnable {
 	}
 
 	public void sendMessage(String m) {
-		System.out.println(m);
 		c.sendMessage(m);
 	}
 
