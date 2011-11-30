@@ -9,9 +9,9 @@ public class WClientHandler extends Thread {
 	private final WServe server;
 	private final BufferedReader input;
 	private final PrintWriter output; 
-	private User me;
+	private WUser me;
 	
-	public WClientHandler(WServe server, Socket client, User who) throws IOException {
+	public WClientHandler(WServe server, Socket client, WUser who) throws IOException {
 		this.server = server;
 		this.client = client;
 		this.me = who;
@@ -34,6 +34,9 @@ public class WClientHandler extends Thread {
 			if (message.startsWith("user: ")) {
 				String[] m = message.split(" ");
 				server.setName(this, m[1]);
+				
+				server.broadcastTo(me.getId(), server.getUsers()); //send users to client
+				
 			} else {
 				server.broadcastTo(me.getId(), "Please provide a username.");
 				server.removeUser(me.getId());
@@ -81,11 +84,9 @@ public class WClientHandler extends Thread {
 	private void decodeMessage(String message) throws Exception {
 		String[] m = message.split(" ");
 		
-		if(message.startsWith("chat:"))
-			server.broadcastExcept(me.getId(), message);
-		else if(message.startsWith("exit:"))
+		if(message.startsWith("exit"))
 			server.removeUser(me.getId());
-		else if (message.startsWith("draw:"))
+		else if (message.startsWith("draw"))
 			server.broadcastExcept(me.getId(), message);
 		else
 			server.broadcastTo(me.getId(), "Unknow message: " + message);
@@ -98,5 +99,6 @@ public class WClientHandler extends Thread {
 	public void exit() throws Exception {
 		input.close();
 		output.close();
+		client.close(); //Closing this socket will also close the socket's InputStream and OutputStream
 	}
 }

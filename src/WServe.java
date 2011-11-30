@@ -30,7 +30,7 @@ public class WServe implements Runnable {
 			try {
 				Socket client = sock.accept();
 				Integer id = getNextID();
-				WClientHandler handler = new WClientHandler(this, client, new User(id,"user"+id));
+				WClientHandler handler = new WClientHandler(this, client, new WUser(id,"user"+id));
 				Users.put(id, handler);
 				new Thread(handler).start();
 			}
@@ -68,14 +68,22 @@ public class WServe implements Runnable {
 		Users.put(id,client); //putting existing id overwrites previous entry
 		broadcastExcept(id, "User joined: " + name);
 	}
+	
+	public String getUsers(){
+		String allUsers = "users ";
+		
+		for (WClientHandler u: Users.values()) {
+			allUsers = allUsers + "#" + u.getId() + " " + u.getNick();
+		}
+		
+		return allUsers;
+	}
 
-	public synchronized void removeUser(Integer id){
+	public void removeUser(Integer id){
 		try{
 			WClientHandler user = Users.remove(id);
 			if (user == null) return;
-
 			user.exit();
-
 			broadcast("User left: " + user.getNick());
 		}
 

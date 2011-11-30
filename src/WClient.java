@@ -1,7 +1,7 @@
 import java.util.HashMap;
 
 public class WClient implements Runnable {
-	private HashMap<Integer, User> Users = new HashMap<Integer, User>(); //connected users
+	private HashMap<Integer, String> Users = new HashMap<Integer, String>(); //connected users
 	private Communication c; //link to server
 	private Whiteboard w;
 	private String name = "User";
@@ -21,8 +21,7 @@ public class WClient implements Runnable {
 		try {
 			while (true) {
 				String m = c.readMessage();
-				//decodeMessage(m); //TODO implement message system
-				System.out.println(m);
+				decodeMessage(m); //TODO implement message system
 			}
 		}
 		catch (Exception e) {
@@ -34,8 +33,25 @@ public class WClient implements Runnable {
 		System.exit(0);
 	}
 
-	/*private void populateUserList() {
-		UserItemList = new JList(Users.toArray());
-		UserItemList.setCellRenderer(new UserCellRenderer());
-	}*/
+	private void decodeMessage(String message) throws Exception {
+		String[] m = message.split(" ");
+		
+		if(message.startsWith("users"))
+			populateUserList(message.split("#"));
+		//else if (message.startsWith("draw"))
+			
+		//else
+			
+	}
+	
+	private void populateUserList(String[] m) {
+		Users.clear();
+		
+		for (String s: m) {
+			String[] user = s.split(" ");
+			Users.put(user[0], user[1]);
+		}
+
+		w.populateUserList();
+	}
 }

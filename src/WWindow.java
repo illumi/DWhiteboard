@@ -52,6 +52,11 @@ public class WWindow extends JFrame{
 		PaneLogin.setVisible(true);
 		this.setVisible(true);
 	}
+	
+	public void populateUserList() {
+		//UserItemList = new JList(Users.toArray());
+		//UserItemList.setCellRenderer(new UserCellRenderer());
+	}
 
 	private void initComponents() {
 		GroupLogin = new ButtonGroup();
@@ -93,12 +98,6 @@ public class WWindow extends JFrame{
 				}
 
 				w.login(how, where, nick);
-
-				//notify server
-				//c = new Communication(, how);
-
-				//c.sendMessage(TextName.getText());
-				//Server should add user to user list
 
 				//Users.clear();
 				//Users = (ArrayList<User>)c.readMessage();
@@ -185,7 +184,7 @@ public class WWindow extends JFrame{
 		ButtonLogout.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 
-				//notify server
+				//TODO notify server
 				//re-initialise local variables
 				setTitle("Select a Technology");
 				PaneDrawing.setVisible(false);
@@ -266,7 +265,7 @@ public class WWindow extends JFrame{
 
 		public Component getListCellRendererComponent(JList list, Object value,
 				int index, boolean isSelected, boolean cellHasFocus) {
-			User u = (User) value;
+			WUser u = (WUser) value;
 			setText(u.getName());
 			if (isSelected) {
 				setBackground(HIGHLIGHT_COLOR);

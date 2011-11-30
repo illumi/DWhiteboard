@@ -16,6 +16,10 @@ public class Whiteboard implements Runnable {
 		new Thread(r);
 	}
 
+	public void populateUserList() {
+		window.populateUserList();
+	}
+	
 	public void run() {
 		window = new WWindow(this);
 	}
