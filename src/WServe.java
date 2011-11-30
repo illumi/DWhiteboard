@@ -64,12 +64,14 @@ public class WServe implements Runnable {
 	}
 
 	public void setName(WClientHandler client, String name) {
-		client.iAm(name);
-		Users.put(client.getClientId(),client); //putting existing id overwrites previous entry
-		broadcastExcept(client.getClientId(), "User joined: " + name);
+		if (name != "" || name != null) {
+			client.iAm(name);
+			Users.put(client.getClientId(), client); //putting existing id overwrites previous entry
+		}
+		broadcastExcept(client.getClientId(), "User joined: " + client.getNick());
 	}
 	
-	public String getUsers(){
+	public String getUsers() {
 		String allUsers = "users ";
 		for (WClientHandler u: Users.values()) {
 			allUsers = allUsers + "#" + u.getClientId() + " " + u.getNick();
@@ -77,7 +79,7 @@ public class WServe implements Runnable {
 		return allUsers;
 	}
 
-	public void removeUser(Integer id){
+	public void removeUser(Integer id) {
 		try{
 			WClientHandler user = Users.remove(id);
 			if (user == null) return;
@@ -88,7 +90,7 @@ public class WServe implements Runnable {
 		}
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		System.out.println("Starting server.");
 		new Thread(new WServe()).start();
 	}

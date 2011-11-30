@@ -28,7 +28,7 @@ public class WWindow extends JFrame{
 	private WCanvas PaneDrawArea;
 	private JPanel PaneDrawing;
 	private JPanel PaneLogin;
-	private JRadioButton RButtonSOAP;
+	private JRadioButton RButtonRMI;
 	private JRadioButton RButtonSocket;
 	private JRadioButton RButtonX;
 	private JTextField TextHost;
@@ -62,7 +62,7 @@ public class WWindow extends JFrame{
 		GroupLogin = new ButtonGroup();
 		PaneLogin = new JPanel();
 		ButtonLogin = new JButton();
-		RButtonSOAP = new JRadioButton();
+		RButtonRMI = new JRadioButton();
 		RButtonSocket = new JRadioButton();
 		RButtonX = new JRadioButton();
 		TextHost = new JTextField();
@@ -115,8 +115,8 @@ public class WWindow extends JFrame{
 			}
 		});
 
-		GroupLogin.add(RButtonSOAP);
-		RButtonSOAP.setText("SOAP");
+		GroupLogin.add(RButtonRMI);
+		RButtonRMI.setText("RMI");
 
 		GroupLogin.add(RButtonX);
 		RButtonX.setText("X");
@@ -141,7 +141,7 @@ public class WWindow extends JFrame{
 								.addComponent(TextHost, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE)
 								.addComponent(TextName, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE)
 								.addComponent(RButtonSocket)
-								.addComponent(RButtonSOAP)
+								.addComponent(RButtonRMI)
 								.addComponent(RButtonX))
 								.addContainerGap(186, Short.MAX_VALUE))
 				);
@@ -158,7 +158,7 @@ public class WWindow extends JFrame{
 										.addComponent(LabelHost)
 										)
 										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(RButtonSOAP)
+										.addComponent(RButtonRMI)
 										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(RButtonSocket)
 										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -183,10 +183,7 @@ public class WWindow extends JFrame{
 		ButtonLogout.setText("Logout");
 		ButtonLogout.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-
-				//TODO notify server
-				sendMessage("logout ");
-				//re-initialise local variables
+				sendMessage("exit");
 				setTitle("Select a Technology");
 				PaneDrawing.setVisible(false);
 				PaneLogin.setVisible(true);
