@@ -55,7 +55,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 		try {
 			RMIServer server = new RMIServer();
 
-			Naming.rebind("rmichat", server);
+			Naming.rebind("drawIt", server);
 		}
 		catch (java.net.MalformedURLException e){
 			System.out.println("Malformed URL "	+ e.toString());
