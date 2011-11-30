@@ -68,7 +68,7 @@ public class WServe implements Runnable {
 		Users.put(client.getClientId(),client); //putting existing id overwrites previous entry
 		broadcastExcept(client.getClientId(), "User joined: " + name);
 	}
-	
+
 	public String getUsers(){
 		String allUsers = "users ";
 		for (WClientHandler u: Users.values()) {
@@ -93,4 +93,3 @@ public class WServe implements Runnable {
 		new Thread(new WServe()).start();
 	}
 }
-
