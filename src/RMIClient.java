@@ -10,6 +10,7 @@ public class RMIClient{
 	private static String hostname;
 	private BufferedReader input; 
 	private PrintStream output; 
+	private boolean constructed;
 
 	RMINotifyInterface displayChat;
 	RMIServerInterface server;
@@ -17,12 +18,25 @@ public class RMIClient{
 	public RMIClient(){
 		input = new BufferedReader(new InputStreamReader(System.in)); 
 		output = System.out;
+		constructed = false;
+	}
+	
+	public RMIClient(String name, String hostname){
+		
+		this.name = name;
+		this.hostname = hostname;
+		
+		input = new BufferedReader(new InputStreamReader(System.in)); 
+		output = System.out;
+		constructed = true;
 	}
 
 	public void run(){
 		try {
-			System.out.print("hostname: ");
-			hostname = input.readLine();
+			if(!constructed){
+				System.out.print("hostname: ");
+				hostname = input.readLine();
+			}
 			
 			//BUILD HOST ADDRESS HERE
 			Remote remoteObject = Naming.lookup("rmi://" + hostname + "/drawIt");
@@ -43,7 +57,10 @@ public class RMIClient{
 
 		try{
 			String message = "";
-			System.out.print("username: ");
+			if(constructed)
+				firstMessage = false;
+			else
+				System.out.print("username: ");
 			while((message = readMessage()) != null){
 				handleMessage(message);
 			}	

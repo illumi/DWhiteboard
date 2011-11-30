@@ -70,7 +70,7 @@ public class WServe implements Runnable {
 		}
 		broadcastExcept(client.getClientId(), "User joined: " + client.getNick());
 	}
-	
+
 	public String getUsers() {
 		String allUsers = "users ";
 		for (WClientHandler u: Users.values()) {
@@ -95,4 +95,3 @@ public class WServe implements Runnable {
 		new Thread(new WServe()).start();
 	}
 }
-
