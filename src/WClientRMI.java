@@ -9,7 +9,7 @@ public class WClientRMI implements Communication {
 	RMINotifyInterface displayChat;
 	RMIServerInterface server;
 
-	WClientRMI(String host) {
+	WClientRMI(String host, String username) {
 		try {
 			input = new BufferedReader(new InputStreamReader(System.in)); 
 			output = System.out;
@@ -20,11 +20,8 @@ public class WClientRMI implements Communication {
 				displayChat = new RMIDisplayHandler(output);
 				
 				//
-				String username = "c1";
 				displayChat.setName(username);
 				server.join(displayChat);
-				
-				
 				//
 				connected = true;
 			}
@@ -45,7 +42,6 @@ public class WClientRMI implements Communication {
 		}
 		catch (RemoteException re){
 			System.out.println("Fail " + re);
-
 		}
 	}
 
