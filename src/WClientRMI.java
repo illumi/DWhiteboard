@@ -2,7 +2,7 @@ import java.rmi.*;
 import java.rmi.server.*;
 import java.io.*;
 
-public class WClientRMI implements Communication {
+public class WClientRMI implements WCommsInterface {
 	protected boolean connected = false;
 	private BufferedReader input; 
 	private PrintStream output; 

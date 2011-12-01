@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class WClientSocket implements Communication {
+public class WClientSocket implements WCommsInterface {
 	private Socket socket;
 	private BufferedReader input;
 	private PrintWriter output;
