@@ -17,7 +17,7 @@ public class WClient implements Runnable {
 		}else if(how.equals("RMI")) {
 			c = new WClientRMI(where, name);
 		} else if(how.equals("RPC")) {
-			//c = new Communication(where, name);
+			c = new RPCWhiteboardClientRun(where, name);
 		}
 	}
 

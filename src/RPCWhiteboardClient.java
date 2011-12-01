@@ -117,17 +117,5 @@ public class RPCWhiteboardClient extends OncRpcClientStub {
         return result$.stringValue();
     }
 
-    /**
-     * Call remote procedure close_1.
-     * @throws OncRpcException if an ONC/RPC error occurs.
-     * @throws IOException if an I/O error occurs.
-     */
-    public void close_1()
-           throws OncRpcException, IOException {
-        XdrVoid args$ = XdrVoid.XDR_VOID;
-        XdrVoid result$ = XdrVoid.XDR_VOID;
-        client.call(RPCWhiteboard.close_1, RPCWhiteboard.WHITEBOARD_VERS, args$, result$);
-    }
-
 }
 // End of WhiteboardClient.java
