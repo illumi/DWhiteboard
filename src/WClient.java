@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 public class WClient implements Runnable {
 	private ArrayList<WUser> Users = new ArrayList<WUser>(); //connected users
-	private HashMap<WUser, WCanvas> UserBoards = new HashMap<WUser, WCanvas>(); //connected users
+	private HashMap<WUser, WCanvas> UserBoards = new HashMap<WUser, WCanvas>(); //connected user's boards
 	private Communication c; //link to server
 	private Whiteboard w;
 	private String name = "User";
@@ -54,7 +54,6 @@ public class WClient implements Runnable {
 		//else if (message.startsWith("draw"))
 			
 		//else
-			
 	}
 
 	private void populateUserList(String[] m) {

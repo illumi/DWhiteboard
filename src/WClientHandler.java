@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class WClientHandler extends Thread {
-	private final Socket client;
+	private final Socket socket;
 	private final WServe server;
 	private final BufferedReader input;
 	private final PrintWriter output; 
@@ -13,11 +13,11 @@ public class WClientHandler extends Thread {
 	
 	public WClientHandler(WServe server, Socket client, WUser who) throws IOException {
 		this.server = server;
-		this.client = client;
+		this.socket = client;
 		this.me = who;
 		
-		input = new BufferedReader(new InputStreamReader(client.getInputStream()));
-		output = new PrintWriter(client.getOutputStream(), true);
+		input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		output = new PrintWriter(socket.getOutputStream(), true);
 	}
 	
 	protected void iAm(String name) {
@@ -64,7 +64,7 @@ public class WClientHandler extends Thread {
 
 				output.close();
 				input.close();
-				client.close();
+				socket.close();
 
 			}
 			catch (IOException e) {
@@ -99,12 +99,13 @@ public class WClientHandler extends Thread {
 	}
 
 	public void sendMessage(String message) {
+		System.out.println(message);
 		output.println(message);
 	}
 
 	public void exit() throws Exception {
 		input.close();
 		output.close();
-		client.close(); //Closing this socket will also close the socket's InputStream and OutputStream
+		socket.close(); //Closing this socket will also close the socket's InputStream and OutputStream
 	}
 }
