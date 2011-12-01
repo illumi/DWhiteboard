@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Component;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -30,7 +31,7 @@ public class WWindow extends JFrame{
 	private JPanel PaneLogin;
 	private JRadioButton RButtonRMI;
 	private JRadioButton RButtonSocket;
-	private JRadioButton RButtonX;
+	private JRadioButton RButtonRPC;
 	private JTextField TextHost;
 	private JTextField TextName;
 	private JList UserItemList;
@@ -53,9 +54,10 @@ public class WWindow extends JFrame{
 		this.setVisible(true);
 	}
 	
-	public void populateUserList() {
-		//UserItemList = new JList(Users.toArray());
-		//UserItemList.setCellRenderer(new UserCellRenderer());
+	public void populateUserList(ArrayList<WUser> Users) {
+		UserItemList = new JList(Users.toArray());
+		UserItemList.setCellRenderer(new UserCellRenderer());
+		jScrollPane1.setViewportView(UserItemList);
 	}
 
 	private void initComponents() {
@@ -64,7 +66,7 @@ public class WWindow extends JFrame{
 		ButtonLogin = new JButton();
 		RButtonRMI = new JRadioButton();
 		RButtonSocket = new JRadioButton();
-		RButtonX = new JRadioButton();
+		RButtonRPC = new JRadioButton();
 		TextHost = new JTextField();
 		TextName = new JTextField();
 		LabelHost = new JLabel();
@@ -98,15 +100,8 @@ public class WWindow extends JFrame{
 				}
 
 				w.login(how, where, nick);
-
-				//Users.clear();
-				//Users = (ArrayList<User>)c.readMessage();
-				//if success logged on{
-				//get user list from server
-				//populateUserList();
-				jScrollPane1.setViewportView(UserItemList);
+				
 				//select Self from user list
-
 				//enable drawing for self
 				PaneDrawArea.drawingEnabled(true);
 				PaneLogin.setVisible(false);
@@ -118,8 +113,8 @@ public class WWindow extends JFrame{
 		GroupLogin.add(RButtonRMI);
 		RButtonRMI.setText("RMI");
 
-		GroupLogin.add(RButtonX);
-		RButtonX.setText("X");
+		GroupLogin.add(RButtonRPC);
+		RButtonRPC.setText("RPC");
 
 		GroupLogin.add(RButtonSocket);
 		RButtonSocket.setSelected(true);
@@ -142,7 +137,7 @@ public class WWindow extends JFrame{
 								.addComponent(TextName, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE)
 								.addComponent(RButtonSocket)
 								.addComponent(RButtonRMI)
-								.addComponent(RButtonX))
+								.addComponent(RButtonRPC))
 								.addContainerGap(186, Short.MAX_VALUE))
 				);
 		PaneLoginLayout.setVerticalGroup(
@@ -162,7 +157,7 @@ public class WWindow extends JFrame{
 										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(RButtonSocket)
 										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(RButtonX)
+										.addComponent(RButtonRPC)
 										.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(ButtonLogin))
 				);

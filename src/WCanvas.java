@@ -32,6 +32,11 @@ class WCanvas extends JPanel {
 	public void drawingEnabled(boolean b) {
 		this.drawingEnabled = b;
 	}
+	
+	public void passiveDraw(double x, double y) {
+		g.draw(new Line2D.Double(x, y, x, y));
+		repaint();
+	}
 
 	public void paintComponent(Graphics g) {
 		super.paintComponents(g);
@@ -52,7 +57,7 @@ class WCanvas extends JPanel {
 				x = e.getX();
 				y = e.getY();
 				g.draw(new Line2D.Double(x, y, x, y));
-				w.sendMessage("draw: "+x+" " +y);
+				w.sendMessage("draw "+x+" " +y);
 				repaint();
 			}
 		}
@@ -63,7 +68,7 @@ class WCanvas extends JPanel {
 				x = e.getX();
 				y = e.getY();
 				g.draw(new Line2D.Double(x, y, x, y));
-				w.sendMessage("draw: "+x+" " +y);
+				w.sendMessage("draw "+x+" " +y);
 				repaint();
 			}
 		}

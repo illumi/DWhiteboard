@@ -19,10 +19,10 @@ public class WClientRMI implements WCommsInterface {
 				server = (RMIServerInterface)remoteObject ;
 				displayChat = new RMIDisplayHandler(output);
 				
-				//
+
 				displayChat.setName(username);
 				server.join(displayChat);
-				//
+
 				connected = true;
 			}
 			else{

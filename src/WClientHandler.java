@@ -35,11 +35,9 @@ public class WClientHandler extends Thread {
 	public void run() {
 		try {
 			String message = input.readLine(); 
-			if (message.startsWith("user: ")) {
+			if (message.startsWith("user ")) {
 				String[] m = message.split(" ");
 				server.setName(this, m[1]);
-				
-				sendMessage("HI THAR");
 				
 				server.broadcastTo(me.getId(), server.getUsers()); //send users to client
 				
@@ -92,9 +90,11 @@ public class WClientHandler extends Thread {
 		
 		if(message.startsWith("exit"))
 			server.removeUser(me.getId());
-		else if (message.startsWith("draw"))
-			server.broadcastExcept(me.getId(), message);
-		else
+		else if (message.startsWith("draw")) {
+			String[] mess = message.split(" ");
+			String send = mess[0]+" "+me.getId()+" "+mess[1]+" "+mess[2];
+			server.broadcastExcept(me.getId(), send);
+		} else
 			server.broadcastTo(me.getId(), "Unknow message: " + message);
 	}
 

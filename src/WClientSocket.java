@@ -11,12 +11,15 @@ public class WClientSocket implements WCommsInterface {
 	protected boolean connected = false;
 	protected final Integer port = 11111;
 	
-	WClientSocket(String host) {
+	WClientSocket(String host, String name) {
 		try {
 			socket = new Socket(host, port);
 			output = new PrintWriter(socket.getOutputStream(), true);
 			input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			connected = true;
+			
+			sendMessage("user "+name);
+			
 		} catch(IOException e) {
 			System.out.println("Fail " + e);
 		}
@@ -28,7 +31,7 @@ public class WClientSocket implements WCommsInterface {
 		}
 	}
 	
-	public synchronized String readMessage() throws Exception {
+	public String readMessage() throws Exception {
 		return input.readLine();
 	}
 

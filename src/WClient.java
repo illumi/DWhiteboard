@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 public class WClient implements Runnable {
 	private ArrayList<WUser> Users = new ArrayList<WUser>(); //connected users
-	private HashMap<WUser, WCanvas> UserBoards = new HashMap<WUser, WCanvas>(); //connected user's boards
+	private HashMap<Integer, WCanvas> UserBoards = new HashMap<Integer, WCanvas>(); //connected user's boards
 	private WCommsInterface c; //link to server
 	private Whiteboard w;
 	private String name = "User";
@@ -11,18 +11,14 @@ public class WClient implements Runnable {
 	public WClient(Whiteboard w, String how, String where, String name) {
 		this.w = w;
 		this.name = name;
-		
+
 		if(how.equals("SOCKET")) {
-			c = new WClientSocket(where);
+			c = new WClientSocket(where, name);
 		}else if(how.equals("RMI")) {
-			System.out.println(where + name);
 			c = new WClientRMI(where, name);
-		} else if(how.equals("X")) {
-			//c = new Communication(where, how);
+		} else if(how.equals("RPC")) {
+			//c = new Communication(where, name);
 		}
-		
-		
-		sendMessage("user: "+name);
 	}
 
 	public void sendMessage(String m) {
@@ -33,7 +29,6 @@ public class WClient implements Runnable {
 		try {
 			while (true) {
 				String m = c.readMessage();
-				System.out.println(m);
 				decodeMessage(m);
 			}
 		}
@@ -49,22 +44,33 @@ public class WClient implements Runnable {
 	private void decodeMessage(String message) throws Exception {  //TODO implement message system	
 		String[] m = message.split(" ");
 		
-		if(message.startsWith("users"))
+		if(message.startsWith("users")) { //users split by hash, id and username split by space
 			populateUserList(message.split("#"));
-		//else if (message.startsWith("draw"))
-			
+		} else if (message.startsWith("draw")) // draw <id> <x> <y>
+			drawOn(Integer.parseInt(m[1]), Double.parseDouble(m[2]), Double.parseDouble(m[3]));
 		//else
+	}
+	
+	private void drawOn(Integer id, Double x, Double y) {
+		WCanvas canvas = UserBoards.get(id);
+		canvas.passiveDraw(x, y);
 	}
 
 	private void populateUserList(String[] m) {
 		Users.clear();
-
-		for (String s: m) {
-			String[] user = s.split(" ");
+		
+		for (int i = 1; i < m.length; i++){
+			String[] user = m[i].split(" ");
 			Users.add(new WUser(Integer.parseInt(user[0]), user[1]));
 		}
-
-		//System.out.println(""+Users.keySet());
-		w.populateUserList();
+		
+		w.populateUserList(Users);
+		
+		//RePopulate the UserBoards ignoring existing users + deleting old users
+		for (WUser u: Users) {
+			if (!UserBoards.containsKey(u.getClass())) {
+				UserBoards.put(u.getId(), new WCanvas(null));
+			}
+		}
 	}
 }
