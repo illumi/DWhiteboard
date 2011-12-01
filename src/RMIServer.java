@@ -3,15 +3,20 @@ import java.rmi.server.*;
 import java.lang.*;
 import java.util.*;
 
-
+/**
+*	RMIServer class.
+*	Jakub Chlanda
+**/
 public class RMIServer extends UnicastRemoteObject implements RMIServerInterface {
 	
 	private boolean vocality = true;
+	//list of clients
 	private ArrayList<RMINotifyInterface> threads = new ArrayList<RMINotifyInterface>();
 
 	public RMIServer() throws RemoteException {
 	}
 
+	//add new client to the server
 	public synchronized void join(RMINotifyInterface n) throws RemoteException {
 		if(vocality)
 			System.out.println("Server.join: " + n.getName());
@@ -19,6 +24,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 		broadcastAll(n, "I have joined.\n");
 	}
 
+	//send a message to all the clients
 	public synchronized void broadcastAll(RMINotifyInterface n, String s) throws RemoteException{
 		if(vocality)
 			System.out.println("Server.broadcastAll: " + s);
@@ -30,6 +36,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 
 	public synchronized void broadcastTo(RMINotifyInterface n, String s, String username) throws RemoteException{}
 
+	//send a message to all clients apart from the specified one
 	public synchronized void broadcastExcept(RMINotifyInterface n, String s, String username) throws RemoteException{
 		if(vocality)
 			System.out.println("Server.broadcastExcept, message: " + s + " except: " + username);
@@ -40,6 +47,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 		}
 	}
 
+	//remove a client from the array
 	public synchronized void leave(RMINotifyInterface n) throws RemoteException{
 		if(vocality)
 			System.out.println("Server.leave: " + n.getName());
@@ -51,6 +59,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerInterface
 		}
 	}
 
+	//main
 	public static void main(String[] args){
 		try {
 			RMIServer server = new RMIServer();

@@ -1,6 +1,11 @@
 import java.rmi.*;
 
+/**
+*	RMIServerInterface
+*	Jakub Chlanda
+**/
 public interface RMIServerInterface extends Remote {
+
     public void join(RMINotifyInterface n) throws RemoteException;
     
     public void broadcastAll(RMINotifyInterface n, String message) throws RemoteException;
