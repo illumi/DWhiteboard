@@ -2,6 +2,11 @@ import java.rmi.*;
 import java.rmi.server.*;
 import java.io.*;
 
+/**
+*   RMIDisplayHandler.
+*   Middle layer betwee server and client.
+*   Jakub Chlanda
+**/
 public class RMIDisplayHandler extends UnicastRemoteObject implements RMINotifyInterface {
 
 	private PrintStream textArea;
@@ -10,17 +15,8 @@ public class RMIDisplayHandler extends UnicastRemoteObject implements RMINotifyI
     public RMIDisplayHandler(PrintStream textArea) throws RemoteException{
     	    this.textArea = textArea;
     }
-    
-    public void arriveMessage(String name) throws RemoteException{
-        try {
-    	    textArea.append(name + " has joined\n");
-    	}
-        catch(Exception e){
-            System.out.println("Message Failure.\n");
-            e.printStackTrace();
-        };
-    }
-    
+
+    //server calls this method it wants to send message to a client
     public void sendMessage(String name, String message) throws RemoteException{
         try {
     	    textArea.append(name + " says: " + message + "\n");
@@ -31,6 +27,7 @@ public class RMIDisplayHandler extends UnicastRemoteObject implements RMINotifyI
         };
     }
     
+    //inform client that someone has left
     public void closeMessage(String name) throws RemoteException{
         try {
     	    textArea.append(name + " has left.\n");
@@ -40,6 +37,7 @@ public class RMIDisplayHandler extends UnicastRemoteObject implements RMINotifyI
         };
     }
     
+    //tel server your name
     public String getName() {
     	return name;
     }

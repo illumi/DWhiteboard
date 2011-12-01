@@ -1,8 +1,10 @@
 import java.rmi.*;
 
+/**
+*	RMISNotifyInterface.
+*	Jakub Chlanda
+**/
 public interface RMINotifyInterface extends Remote {
-
-	public void arriveMessage(String name) throws RemoteException;
 	
     public void sendMessage(String name, String message) throws RemoteException;
     

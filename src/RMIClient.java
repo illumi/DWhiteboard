@@ -2,6 +2,10 @@ import java.rmi.*;
 import java.rmi.server.*;
 import java.io.*; 
 
+/**
+*	RMIClient class.
+*	Jakub Chlanda
+**/
 public class RMIClient{
 
 	private String message = "";
@@ -12,15 +16,19 @@ public class RMIClient{
 	private PrintStream output; 
 	private boolean constructed;
 
-	RMINotifyInterface displayChat;
+	//middle layer
+	RMINotifyInterface dH;
+	//server
 	RMIServerInterface server;
 
+	//use this constructor when run from command line
 	public RMIClient(){
 		input = new BufferedReader(new InputStreamReader(System.in)); 
 		output = System.out;
 		constructed = false;
 	}
 	
+	//use this constructor wiht gui
 	public RMIClient(String name, String hostname){
 		
 		this.name = name;
@@ -31,6 +39,7 @@ public class RMIClient{
 		constructed = true;
 	}
 
+	//start me
 	public void run(){
 		try {
 			if(!constructed){
@@ -38,12 +47,12 @@ public class RMIClient{
 				hostname = input.readLine();
 			}
 			
-			//BUILD HOST ADDRESS HERE
+			//find server 
 			Remote remoteObject = Naming.lookup("rmi://" + hostname + "/drawIt");
 
 			if (remoteObject instanceof RMIServerInterface) {
 				server = (RMIServerInterface)remoteObject ;
-				displayChat = new RMIDisplayHandler(output);
+				dH = new RMIDisplayHandler(output);
 			}
 			else{
 				System.out.println("I didn't find the RMI server I was looking for.");
@@ -61,6 +70,8 @@ public class RMIClient{
 				firstMessage = false;
 			else
 				System.out.print("username: ");
+
+			//if everything ok start main excecutin loop - read message and handle it
 			while((message = readMessage()) != null){
 				handleMessage(message);
 			}	
@@ -71,7 +82,7 @@ public class RMIClient{
 		finally {
 			try {
 
-				server.leave(displayChat);
+				server.leave(dH);
 
 				output.close();
 				input.close();
@@ -82,6 +93,7 @@ public class RMIClient{
 		}
 	}
 
+	//only with command line
 	public String readMessage() {
 		try{
 			String line = input.readLine().trim();
@@ -95,21 +107,22 @@ public class RMIClient{
 		}
 	}	
 
+	//act upon message 
 	private void handleMessage(String message) {
 		try{
 			if (firstMessage) {
 				name = message;
-				displayChat.setName(message);
-				server.join(displayChat);
+				dH.setName(message);
+				server.join(dH);
 				firstMessage = false;
 			}
 			else {
 				if(message.startsWith("chat:")){
 					message = message.substring(5, message.length());
-					server.broadcastExcept(displayChat, message, name);
+					server.broadcastExcept(dH, message, name);
 				}
 				else if(message.trim().equals("exit")){
-					server.leave(displayChat);
+					server.leave(dH);
 					
 					input.close();
 					output.close();
@@ -117,7 +130,7 @@ public class RMIClient{
 					System.exit(0);
 				}
 				else
-					server.broadcastAll(displayChat, message);
+					server.broadcastAll(dH, message);
 			}
 		}
 		catch (Exception ie) {
