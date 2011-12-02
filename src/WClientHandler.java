@@ -39,7 +39,7 @@ public class WClientHandler extends Thread {
 				String[] m = message.split(" ");
 				server.setName(this, m[1]);
 				
-				server.broadcastTo(me.getId(), server.getUsers()); //send users to client
+				server.broadcast(server.getUsers()); //send users to all clients
 				
 			} else {
 				server.broadcastTo(me.getId(), "Please provide a username.");

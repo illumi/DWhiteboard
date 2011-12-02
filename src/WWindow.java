@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.ListCellRenderer;
+import javax.swing.ListSelectionModel;
 import javax.swing.WindowConstants;
 
 
@@ -64,16 +65,14 @@ public class WWindow extends JFrame{
 	}
 	
 	public void populateUserList(ArrayList<WUser> Users) {
-		//UserItemList = new JList(Users.toArray());
-		UserItemList.setListData(Users.toArray());
-		UserItemList.setCellRenderer(new UserCellRenderer());
-		jScrollPane1.setViewportView(UserItemList);
-		jScrollPane1.revalidate();
-		jScrollPane1.repaint();
+		UserItemList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		UserItemList.clearSelection();
+		UserItemList.setListData(Users.toArray()); // Updates the list automatically
 	}
 
 	private void initComponents() {
 		UserItemList = new JList();
+		jScrollPane1 = new JScrollPane(UserItemList);
 		GroupLogin = new ButtonGroup();
 		PaneLogin = new JPanel();
 		ButtonLogin = new JButton();
@@ -85,7 +84,6 @@ public class WWindow extends JFrame{
 		LabelHost = new JLabel();
 		LabelName = new JLabel();
 		PaneDrawing = new JPanel();
-		jScrollPane1 = new JScrollPane();
 		ButtonPen = new JButton();
 		ButtonClear = new JButton();
 		jButton3 = new JButton();
@@ -261,7 +259,7 @@ public class WWindow extends JFrame{
 		pack();
 	}
 
-	class UserCellRenderer extends JLabel implements ListCellRenderer {
+	/*class UserCellRenderer extends JLabel implements ListCellRenderer {
 		private final Color HIGHLIGHT_COLOR = new Color(0, 0, 128);
 
 		public UserCellRenderer() {
@@ -282,5 +280,5 @@ public class WWindow extends JFrame{
 			}
 			return this;
 		}
-	}
+	}*/
 }
