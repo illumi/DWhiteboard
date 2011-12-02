@@ -31,12 +31,13 @@ public class RPCWhiteboardClientRun implements WCommsInterface{
 	}
 	
 	public String readMessage() {
-		String message = new String("");
-		try {
+		String message = new String("not even trying to read");
+		/*try {
 			message = client.readMessage_1();
+			System.out.println(message);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
-		}
+		}*/
 		return message;
 	}
 	
