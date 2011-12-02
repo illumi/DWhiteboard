@@ -8,16 +8,17 @@ public class RPCWhiteboardServer extends RPCWhiteboardServerStub {
 	private HashMap<Integer, RPCWhiteboardClientRun> users;
 		
 	public RPCWhiteboardServer() throws OncRpcException, IOException {
-		users = new HashMap<Integer, RPCWhiteboardClientRun>();
 	}
 	
 	
 	public void sendMessage_1(String message) {
+		System.out.println("Server receives a message: " + message);
 		this.message = message;
-		System.out.println("Received message: " + message);
+		
 	}
 	
 	public String readMessage_1() {
+		System.out.println("Server has received a message: " + message);
 		return message;
 	}
 	

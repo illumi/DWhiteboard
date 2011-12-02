@@ -29,4 +29,8 @@ public class Whiteboard implements Runnable {
 	public void run() {
 		window = new WWindow(this);
 	}
+	
+	public void logout() {
+		client.logout();
+	}
 }

@@ -46,8 +46,8 @@ public class WClient implements Runnable {
 		
 		if(message.startsWith("users")) { //users split by hash, id and username split by space
 			populateUserList(message.split("#"));
-		} else if (message.startsWith("draw")) // draw <id> <x> <y>
-			drawOn(Integer.parseInt(m[1]), Double.parseDouble(m[2]), Double.parseDouble(m[3]));
+		} //else if (message.startsWith("draw")) // draw <id> <x> <y>
+			//drawOn(Integer.parseInt(m[1]), Double.parseDouble(m[2]), Double.parseDouble(m[3]));
 		//else
 	}
 	
@@ -73,5 +73,10 @@ public class WClient implements Runnable {
 				UserBoards.put(u.getId(), new WCanvas(null));
 			}
 		}
+	}
+	
+	public void logout() {
+		sendMessage("exit");
+		c.close();
 	}
 }
