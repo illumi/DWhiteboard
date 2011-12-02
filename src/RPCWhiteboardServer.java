@@ -1,13 +1,16 @@
 import org.acplt.oncrpc.*;
 import org.acplt.oncrpc.server.*;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class RPCWhiteboardServer extends RPCWhiteboardServerStub {
-	String message;
-	
+	private String message;
+	private HashMap<Integer, RPCWhiteboardClientRun> users;
+		
 	public RPCWhiteboardServer() throws OncRpcException, IOException {
-	
+		users = new HashMap<Integer, RPCWhiteboardClientRun>();
 	}
+	
 	
 	public void sendMessage_1(String message) {
 		this.message = message;
