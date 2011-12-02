@@ -52,8 +52,9 @@ public class WClient implements Runnable {
 	}
 	
 	private void drawOn(Integer id, Double x, Double y) {
-		WCanvas canvas = UserBoards.get(id);
-		canvas.passiveDraw(x, y);
+		//WCanvas canvas = UserBoards.get(id); //Draw on users board
+		//canvas.passiveDraw(x, y);
+		//UserBoards.put(id, canvas);
 	}
 
 	private void populateUserList(String[] m) {
@@ -63,9 +64,9 @@ public class WClient implements Runnable {
 			String[] user = m[i].split(" ");
 			Users.add(new WUser(Integer.parseInt(user[0]), user[1]));
 		}
-		
+
 		w.populateUserList(Users);
-		
+
 		//RePopulate the UserBoards ignoring existing users + deleting old users
 		for (WUser u: Users) {
 			if (!UserBoards.containsKey(u.getClass())) {

@@ -27,6 +27,7 @@ public class WWindow extends JFrame{
 	private JLabel LabelHost;
 	private JLabel LabelName;
 	private WCanvas PaneDrawArea;
+	private WCanvas MyPaneDrawArea;
 	private JPanel PaneDrawing;
 	private JPanel PaneLogin;
 	private JRadioButton RButtonRMI;
@@ -54,13 +55,25 @@ public class WWindow extends JFrame{
 		this.setVisible(true);
 	}
 	
+	public void select(Integer id) { //show id's whiteboard
+		if (id == 2) {
+			PaneDrawArea = MyPaneDrawArea;
+		} else {
+			MyPaneDrawArea = PaneDrawArea;
+		}
+	}
+	
 	public void populateUserList(ArrayList<WUser> Users) {
-		UserItemList = new JList(Users.toArray());
+		//UserItemList = new JList(Users.toArray());
+		UserItemList.setListData(Users.toArray());
 		UserItemList.setCellRenderer(new UserCellRenderer());
 		jScrollPane1.setViewportView(UserItemList);
+		jScrollPane1.revalidate();
+		jScrollPane1.repaint();
 	}
 
 	private void initComponents() {
+		UserItemList = new JList();
 		GroupLogin = new ButtonGroup();
 		PaneLogin = new JPanel();
 		ButtonLogin = new JButton();
@@ -259,7 +272,7 @@ public class WWindow extends JFrame{
 		public Component getListCellRendererComponent(JList list, Object value,
 				int index, boolean isSelected, boolean cellHasFocus) {
 			WUser u = (WUser) value;
-			setText(u.getName());
+			select(u.getId());
 			if (isSelected) {
 				setBackground(HIGHLIGHT_COLOR);
 				setForeground(Color.white);

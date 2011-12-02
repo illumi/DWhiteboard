@@ -43,19 +43,16 @@ public class WServe implements Runnable {
 	public void broadcast(String message) {
 		for (WClientHandler u: Users.values()) {
 			u.sendMessage(message);
-			//System.out.println("Broadcast: " + message);
 		}
 	}
 
 	public void broadcastTo(Integer id, String message) {
 		WClientHandler who = Users.get(id);
 		who.sendMessage(message);
-		//System.out.println("Message to: "+who.getNick()+":"+message);
 	}
 
 	public void broadcastExcept(Integer id, String message) {
 		WClientHandler who = Users.get(id);
-		//System.out.println(who.getNick() + " " + message);
 		for (WClientHandler u: Users.values()) {
 			if(u != who) {
 				u.sendMessage(message);
